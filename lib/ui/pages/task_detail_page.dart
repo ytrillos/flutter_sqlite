@@ -38,6 +38,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                   icon: const Icon(Icons.delete),
                   onPressed: () async {
                     // TODO realiza el llamado al metodo para eliminar una tarea
+                    await taskController.deleteTask(task.id);
                   },
                 )
               ]
@@ -94,10 +95,31 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                           String message = "";
                           bool showError = false;
                           if (_editing) {
-                            // TODO llamar metodo para actualizar una tarea   
+                            // TODO llamar metodo para actualizar una tarea
                             //existente, en caso de edición
+                            await taskController
+                                .updateTask(TaskModel(
+                                    id: task.id,
+                                    content: controllerContent.text,
+                                    date: DateTime.parse(controllerDate.text),
+                                    state: task.state))
+                                .onError((error, stackTrace) {
+                              error.printError();
+                              message = error.toString();
+                              showError = true;
+                            });
                           } else {
-                            // TODO llamar metodo para crear una tarea 
+                            // TODO llamar metodo para crear una tarea
+                            await taskController
+                                .addTask(TaskModel(
+                                    content: controllerContent.text,
+                                    date: DateTime.parse(controllerDate.text),
+                                    state: false))
+                                .onError((error, stackTrace) {
+                              error.printError();
+                              message = error.toString();
+                              showError = true;
+                            });
                           }
                           if (showError) {
                             Get.snackbar(title, message,

@@ -17,6 +17,7 @@ class TaskListPage extends StatelessWidget {
             key: const Key('deleteAllButton'),
             onPressed: () {
               // TODO realiza el llamado al metodo para eliminar todas las tareas
+              taskController.deleteAll();
             },
             icon: const Icon(Icons.delete))
       ]),

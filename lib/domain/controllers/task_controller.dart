@@ -18,21 +18,31 @@ class TaskController extends GetxController {
 
   Future<void> addTask(task) async {
     // TODO metodo para añadir tareas
+    await repository.addTask(task);
+    await getAllTasks();
   }
 
   Future<void> getAllTasks() async {
     // TODO metodo para obtener todas las tareas existentes
+    var list = await repository.getAllTasks();
+    _tasks.value = list;
   }
 
   Future<void> deleteTask(id) async {
     // TODO metodo para eliminar una tarea especifica
+    await repository.deleteTask(id);
+    await getAllTasks();
   }
 
   Future<void> deleteAll() async {
     // TODO metodo para eliminar todas las tareas
+    await repository.deleteAll();
+    await getAllTasks();
   }
 
   Future<void> updateTask(user) async {
     // TODO metodo para actualizar tareas de un usuario especifico
+    await repository.updateTask(user);
+    await getAllTasks();
   }
 }
